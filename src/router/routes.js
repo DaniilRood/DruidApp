@@ -2,12 +2,15 @@ const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      requiresAuth: true
+    },
     children: [
-      { path: '', component: () => import('../pages/IndexPage.vue'), meta: { requiresAuth: true } },
-      { path: 'page/:id', name: 'page', component: () => import('pages/Page.vue'),  meta: { requiresAuth: true } },
-      { path: 'subject/:id', name: 'subject', component: () => import('pages/Subject.vue'),  meta: { requiresAuth: true } },
-      { path: '/responsible', component: () => import('src/pages/Responsible.vue'), meta: { requiresAuth: true } },
-      { path: '/executors', component: () => import('src/pages/Executors.vue'), meta: { requiresAuth: true } },
+      { path: '', component: () => import('../pages/IndexPage.vue') },
+      { path: 'page/:id', name: 'page', component: () => import('pages/Page.vue') },
+      { path: 'subject/:id', name: 'subject', component: () => import('pages/Subject.vue') },
+      { path: '/responsible', component: () => import('src/pages/Responsible.vue') },
+      { path: '/executors', component: () => import('src/pages/Executors.vue') },
     ]
   },
   {
