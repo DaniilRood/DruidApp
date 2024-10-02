@@ -8,9 +8,7 @@ const routes = [
     children: [
       { path: '', component: () => import('../pages/IndexPage.vue') },
       { path: 'page/:id', name: 'page', component: () => import('pages/Page.vue') },
-      { path: 'subject/:id', name: 'subject', component: () => import('pages/Subject.vue') },
-      { path: '/responsible', component: () => import('src/pages/Responsible.vue') },
-      { path: '/executors', component: () => import('src/pages/Executors.vue') },
+      { path: 'subject/:id', name: 'subject', component: () => import('pages/Subject.vue') },    
     ]
   },
   {

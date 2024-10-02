@@ -22,7 +22,7 @@ const { result: subject } = useQuery(getSubject, {
 });
 const getName = () => {
     const fullname = subject.value?.get_subject?.fullname;
-    console.log(subject.value?.get_subject?.object?.group);
+    console.log(subject.value?.get_subject?.group.object.name);
     
     return (
         fullname?.first_name + ' ' + fullname?.last_name

@@ -9,7 +9,7 @@
             <q-icon
             @click.prevent="toggleShowChildrens"
             class="icon text-h6"
-            v-if="isSubjects || isChildrens"
+            v-if="isChildrens"
             :name="arrowType"
             />
 
@@ -17,14 +17,20 @@
                 v-if="page.icon" 
                 :name="page.icon" />
             {{ page.title }}
+            <q-icon
+                @click="inviteUser"
+                v-if="_isGroupPage"
+                class=""
+                name="add"
+            />
         </div>
         </q-item>
         </router-link>
-
-    <q-item-section
-        class="ml-md" 
-        v-if="(isSubjects || isChildrens) && showChildrens">
-        <SubjectList v-if="isSubjects" :subjects="subjects.get_group.subject" />
+        
+        <InviteUserPopUp  v-model="_togglePopUp" :group_id="page.object.id" />
+    <q-item-section 
+        v-if="(isChildrens) && showChildrens">
+        <!-- <SubjectList v-if="isSubjects" :subjects="subjects.get_group.subject" /> -->
         <TreePages v-if="isChildrens" :pages="page.children?.data" class="child-pages" />
     </q-item-section>
     </q-item>
@@ -35,6 +41,7 @@ import { useQuery } from "@vue/apollo-composable";
 import { getGroupSubjects } from "src/graphql/queries/queries";
 import TreePages from "./TreePages.vue";
 import SubjectList from "./SubjectList.vue";
+import InviteUserPopUp from "./InviteUserPopUp.vue";
 
 const { page } = defineProps({
     page: Object,
@@ -43,6 +50,9 @@ const { page } = defineProps({
 const { result: subjects } = useQuery(getGroupSubjects, {
     group_id: page?.object?.id,
 });
+
+
+const _isGroupPage = computed(() => page.object.type_id === import.meta.env.VITE_GROUP_TYPE_ID)
 
 const arrowType = ref("keyboard_arrow_right");
 const showChildrens = ref(false);
@@ -57,11 +67,10 @@ const toggleShowChildrens = () => {
     : "keyboard_arrow_right";
 };
 
-// const  routeName = () => {
-//     if (page.object?.type_id === subjects.value?.get_group.type_id)
-//     return "group";
-//     else return "page";
-// }
+const _togglePopUp = ref(false)
+function inviteUser() {
+    _togglePopUp.value = !_togglePopUp.value
+}  
 </script>
 <style lang="scss">
     a {
